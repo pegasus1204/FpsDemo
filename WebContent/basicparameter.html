@@ -1,0 +1,83 @@
+<div class="control-group">
+    <label class="control-label">接口名称</label>
+    <div class="controls">
+        <input type="text" name="service" id="service">
+        <span class="help-inline">接口名称。</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">接口版本</label>
+    <div class="controls">
+        <input type="text" name="version" id="version" value="1.0">
+        <span class="help-inline">接口版本</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">请求时间</label>
+    <div class="controls">
+        <input type="text" name="request_time" id="request_time">
+        <span class="help-inline">发起请求时间，格式yyyyMMddHHmmss</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">合作者身份ID</label>
+    <div class="controls">
+        <input type="text" name="partner_id" id="partner_id">
+        <span class="help-inline">签约合作方的钱包唯一用户号。</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">参数编码字符集</label>
+    <div class="controls">
+        <input type="text" name="_input_charset" id="_input_charset">
+        <span class="help-inline">商户网站使用的编码格式，utf-8</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">签名方式</label>
+    <div class="controls">
+        <input type="text" name="sign_type" id="sign_type">
+        <span class="help-inline">签名方式支持RSA</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">系统异步回调通知地址</label>
+    <div class="controls">
+        <input type="text" name="notify_url" id="notify_url">
+        <span class="help-inline">钱包处理发生状态变迁后异步通知结果，响应结果为“success”，全部小写</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">页面跳转同步返回页面路径</label>
+    <div class="controls">
+        <input type="text" name="return_url" id="return_url">
+        <span class="help-inline">钱包处理完请求后，当前页面自动跳转到商户网站里指定页面的http路径。</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">备注</label>
+    <div class="controls">
+        <input type="text" name="memo" id="memo">
+        <span class="help-inline">说明信息，原文返回。客户可根据需要存放需要在响应时带回的信息。注意：当接口类型为 托管代收/代付/转账/退款时，该长度不能超过256个字符</span>
+    </div>
+</div>
+
+
+<!--框架JS-->
+<script>
+    jQuery.getScript("js/matrix.js", function (data, status, jqxhr) {
+        if (status == "success") {
+            jQuery.getScript("Scripts/sina.set_basicparameter.js", function (data, status, jqxhr) { console.log("Scripts/sina.set_basicparameterjs 加载状态" + status) });
+            jQuery.getScript("js/jquery.uniform.js", function (data, status, jqxhr) { console.log("js/jquery.uniform.js 加载状态" + status) });
+            jQuery.getScript("js/select2.min.js", function (data, status, jqxhr) {
+                if (status == "success") {
+                    jQuery.getScript("js/matrix.form_common.js", function (data, status, jqxhr) {
+                        console.log("js/matrix.form_common.js 加载状态" + status)
+                    });
+                    console.log("js/select2.min..js 加载状态" + status)
+                }
+            });
+            console.log("js/matrix 加载状态" + status);
+        };
+    });
+</script>

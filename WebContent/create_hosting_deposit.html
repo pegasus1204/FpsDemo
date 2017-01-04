@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SINA DEMO</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="css/uniform.css" />
+    <link rel="stylesheet" href="css/select2.css" />
+    <link rel="stylesheet" href="css/matrix-style.css" />
+    <link rel="stylesheet" href="css/matrix-media.css" />
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Header-part-->
+    <div id="header">
+        <h1><a>SINA DEMO</a></h1>
+    </div>
+    <!--close-Header-part-->
+    <!--导航栏及头部-->
+    <div id="sina_side_Header_part">
+    </div>
+    <!--close-导航栏及头部-->
+    <!--内容页-->
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="index.html" title="返回首页" class="tip-bottom"><i class="icon-home"></i> 首页</a></div>
+            <h1>托管充值</h1>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-list"></i> </span>
+                            <h5>同步请求结果展示页面</h5>
+                        </div>
+                        <div id="result" class="widget-content"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box collapsible">
+                        <div class="widget-content nopadding">
+                            <form class="form-horizontal" name="request_form" id="request_form" novalidate="novalidate">
+                                <div class="widget-title">
+                                    <a href="#collapseTwo" data-toggle="collapse">
+                                        <span class="icon"><i class="icon-eye-open"></i></span>
+                                        <h5>基本参数部分</h5>
+                                    </a>
+                                </div>
+                                <div class="collapse" id="collapseTwo">
+                                    <div class="widget-content"> <div id="basicparameter"></div> </div>
+                                </div>
+                                <div class="widget-title">
+                                    <a href="#collapseOne" data-toggle="collapse">
+                                        <span class="icon"><i class="icon-arrow-down"></i></span>
+                                        <h5>业务参数部分</h5>
+                                    </a>
+                                </div>
+                                <div class="collapse in" id="collapseOne">
+                                    <div class="widget-content">
+                                        <div class="control-group">
+                                            <label class="control-label">交易订单号</label>
+                                            <div class="controls">
+                                                <input type="text" name="out_trade_no" id="out_trade_no">
+                                                <span class="help-inline">商户网站交易订单号，商户内部保证唯一</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">摘要</label>
+                                            <div class="controls">
+                                                <input type="text" name="summary" id="summary">
+                                                <span class="help-inline">充值内容摘要</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">用户标识信息</label>
+                                            <div class="controls">
+                                                <input type="text" name="identity_id" id="identity_id">
+                                                <span class="help-inline">商户系统用户ID(字母或数字)</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">用户标识类型</label>
+                                            <div class="controls">
+                                                <input type="text" name="identity_type" id="identity_type">
+                                                <span class="help-inline">ID的类型，目前只包括UID</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">账户类型</label>
+                                            <div class="controls">
+                                                <select name="account_type" id="account_type">
+                                                    <option>SAVING_POT</option>
+                                                    <option>BASIC</option>
+                                                    <option>BANK</option>
+                                                </select>
+                                                <span class="help-inline">账户类型（基本户、保证金户,存钱罐、银行账户）。默认基本户，见附录</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">金额</label>
+                                            <div class="controls">
+                                                <input type="text" name="amount" id="amount">
+                                                <span class="help-inline">单位为：RMB Yuan。精确到小数点后两位</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">用户手续费</label>
+                                            <div class="controls">
+                                                <input type="text" name="user_fee" id="user_fee">
+                                                <span class="help-inline">用户承担的手续费金额</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">付款用户IP地址</label>
+                                            <div class="controls">
+                                                <input type="text" name="payer_ip" id="payer_ip">
+                                                <span class="help-inline">用户在商户平台发起支付时候的IP地址，公网IP，不是内网IP,用于风控校验，请填写用户真实IP，否则容易风控拦截</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">充值关闭时间</label>
+                                            <div class="controls">
+                                                <input type="text" name="deposit_close_time" id="deposit_close_time">
+                                                <span class="help-inline">设置未付款交易的超时时间，一旦超时，该笔交易就会自动被关闭。取值范围：15m～15h。m-分钟，h-小时.不接受小数点</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">支付方式</label>
+                                            <div class="controls">
+                                                <input type="text" name="pay_method" id="pay_method">
+                                                <span class="help-inline">格式：支付方式^金额^扩展|支付方式^金额^扩展。扩展信息内容以“，”分隔，针对不同支付方式的扩展定义见附录 “支付方式扩展”</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">提交</button>
+                                    <input id="reset" type="reset" class="btn btn-primary" value="刷新">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--close-内容页-->
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.ui.custom.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="Scripts/sina_tools.js"></script>
+    <script src="Scripts/sina_api.js"></script>
+    <script>
+        //载入导航栏与头部
+        $("#sina_side_Header_part").load("sina_side_Header_part.html");
+        //载入基本参数页面
+        $("#basicparameter").load("basicparameter.html");
+    </script>
+    <script src="js/jquery.validate.js"></script>
+    <script>
+        //业务参数赋值
+        $("#identity_type").val("UID");
+        $("#identity_id").val($.cookie("identity_id"));
+        $("#out_trade_no").val("order" + getNowFormatDate());
+        $("#summary").val("某某账户充值");
+        $("#deposit_close_time").val("18m");
+        $("#payer_ip").val("114.218.183.139");
+        $('#pay_method').val("online_bank^12^SINAPAY,DEBIT,C");
+        $('#amount').bind('input propertychange', function () {
+            $('#pay_method').val("online_bank^" + $(this).val() + "^SINAPAY,DEBIT,C");
+        });
+        //表单验证
+        $("#request_form").validate({
+            rules: {
+                //基本参数验证部分
+                service: {
+                    required: true
+                },
+                version: {
+                    required: true
+                },
+                request_time: {
+                    required: true
+                },
+                partner_id: {
+                    required: true
+                },
+                _input_charset: {
+                    required: true
+                },
+                sign_type: {
+                    required: true
+                },
+                //业务参数验证部分
+                out_trade_no: {
+                    required: true
+                },
+                identity_id: {
+                    required: true
+                },
+                identity_type: {
+                    required: true
+                },
+                amount: {
+                    required: true,
+                    max:4999,
+                    min:1
+                },
+                pay_method: {
+                    required: true
+                },
+                user_fee: {
+                    number: true
+                },
+                
+            },
+            errorClass: "help-inline",
+            errorElement: "span",
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents('.control-group').addClass('error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents('.control-group').removeClass('error');
+                $(element).parents('.control-group').addClass('success');
+            },
+            submitHandler: function (form) {
+                //需要加密的参数数组
+                var Encryptionstr = [];
+                send(Encryptionstr);
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SINA DEMO</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="css/uniform.css" />
+    <link rel="stylesheet" href="css/select2.css" />
+    <link rel="stylesheet" href="css/matrix-style.css" />
+    <link rel="stylesheet" href="css/matrix-media.css" />
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Header-part-->
+    <div id="header">
+        <h1><a>SINA DEMO</a></h1>
+    </div>
+    <!--close-Header-part-->
+    <!--导航栏及头部-->
+    <div id="sina_side_Header_part">
+    </div>
+    <!--close-导航栏及头部-->
+    <!--内容页-->
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="index.html" title="返回首页" class="tip-bottom"><i class="icon-home"></i> 首页</a></div>
+            <h1>查询余额/基金份额</h1>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-list"></i> </span>
+                            <h5>同步请求结果展示页面</h5>
+                        </div>
+                        <div id="result" class="widget-content"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box collapsible">
+                        <div class="widget-content nopadding">
+                            <form class="form-horizontal" name="request_form" id="request_form" novalidate="novalidate">
+                                <div class="widget-title">
+                                    <a href="#collapseTwo" data-toggle="collapse">
+                                        <span class="icon"><i class="icon-eye-open"></i></span>
+                                        <h5>基本参数部分</h5>
+                                    </a>
+                                </div>
+                                <div class="collapse" id="collapseTwo">
+                                    <div class="widget-content"> <div id="basicparameter"></div> </div>
+                                </div>
+                                <div class="widget-title">
+                                    <a href="#collapseOne" data-toggle="collapse">
+                                        <span class="icon"><i class="icon-arrow-down"></i></span>
+                                        <h5>业务参数部分</h5>
+                                    </a>
+                                </div>
+                                <div class="collapse in" id="collapseOne">
+                                    <div class="widget-content">
+                                        <div class="control-group">
+                                            <label class="control-label">用户标识信息</label>
+                                            <div class="controls">
+                                                <input type="text" name="identity_id" id="identity_id">
+                                                <span class="help-inline">商户系统用户ID(字母或数字)</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">用户标识类型</label>
+                                            <div class="controls">
+                                                <select name="identity_type" id="identity_type">
+                                                    <option>UID</option>
+                                                    <option>MEMBER_ID</option>
+                                                </select>
+                                                <span class="help-inline">商户可以通过传入partnerId来查询自己平台账户余额，identity_type = MEMBER_ID</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">账户类型</label>
+                                            <div class="controls">
+                                                <select name="account_type" id="account_type">
+                                                    <option>SAVING_POT</option>
+                                                    <option>BASIC</option>
+                                                    <option>BANK</option>
+                                                </select>
+                                                <span class="help-inline">账户类型（基本户、保证金户,存钱罐、银行账户）。默认基本户，见附录</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">提交</button>
+                                    <input id="reset" type="reset" class="btn btn-primary" value="刷新">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--close-内容页-->
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.ui.custom.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="Scripts/sina_tools.js"></script>
+    <script src="Scripts/sina_api.js"></script>
+    <script>
+        //载入导航栏与头部
+        $("#sina_side_Header_part").load("sina_side_Header_part.html");
+        //载入基本参数页面
+        $("#basicparameter").load("basicparameter.html");
+    </script>
+    <script src="js/jquery.validate.js"></script>
+    <script>
+        //业务参数赋值
+        $('#identity_type').change(function () {
+            if ($(this).children('option:selected').val() == "MEMBER_ID") {
+                $('#identity_id').val($('#partner_id').val());
+            }
+            if ($(this).children('option:selected').val() == "UID") {
+                $("#identity_id").val($.cookie("identity_id"));
+            }
+        });
+        $("#identity_id").val($.cookie("identity_id"));
+        //表单验证
+        $("#request_form").validate({
+            rules: {
+                //基本参数验证部分
+                service: {
+                    required: true
+                },
+                version: {
+                    required: true
+                },
+                request_time: {
+                    required: true
+                },
+                partner_id: {
+                    required: true
+                },
+                _input_charset: {
+                    required: true
+                },
+                sign_type: {
+                    required: true
+                },
+                //业务参数验证部分
+                identity_id: {
+                    required: true
+                },
+                identity_type: {
+                    required: true
+                },
+            },
+            errorClass: "help-inline",
+            errorElement: "span",
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents('.control-group').addClass('error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents('.control-group').removeClass('error');
+                $(element).parents('.control-group').addClass('success');
+            },
+            submitHandler: function (form) {
+                //需要加密的参数数组
+                var Encryptionstr = [""];
+                send(Encryptionstr);
+            }
+        })
+    </script>
+</body>
+</html>

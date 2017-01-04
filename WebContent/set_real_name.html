@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SINA DEMO</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="css/uniform.css" />
+    <link rel="stylesheet" href="css/select2.css" />
+    <link rel="stylesheet" href="css/matrix-style.css" />
+    <link rel="stylesheet" href="css/matrix-media.css" />
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Header-part-->
+    <div id="header">
+        <h1><a>SINA DEMO</a></h1>
+    </div>
+    <!--close-Header-part-->
+    <!--导航栏及头部-->
+    <div id="sina_side_Header_part">
+    </div>
+    <!--close-导航栏及头部-->
+    <!--内容页-->
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="index.html" title="返回首页" class="tip-bottom"><i class="icon-home"></i> 首页</a></div>
+            <h1>设置实名信息</h1>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-list"></i> </span>
+                            <h5>同步请求结果展示页面</h5>
+                        </div>
+                        <div id="result" class="widget-content"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box collapsible">
+                        <div class="widget-content nopadding">
+                            <form class="form-horizontal" name="request_form" id="request_form" novalidate="novalidate">
+                                <div class="widget-title">
+                                    <a href="#collapseTwo" data-toggle="collapse">
+                                        <span class="icon"><i class="icon-eye-open"></i></span>
+                                        <h5>基本参数部分</h5>
+                                    </a>
+                                </div>
+                                <div class="collapse" id="collapseTwo">
+                                    <div class="widget-content"> <div id="basicparameter"></div> </div>
+                                </div>
+                                <div class="widget-title">
+                                    <a href="#collapseOne" data-toggle="collapse">
+                                        <span class="icon"><i class="icon-arrow-down"></i></span>
+                                        <h5>业务参数部分</h5>
+                                    </a>
+                                </div>
+                                <div class="collapse in" id="collapseOne">
+                                    <div class="widget-content">
+                                        <div class="control-group">
+                                            <label class="control-label">用户标识信息</label>
+                                            <div class="controls">
+                                                <input type="text" name="identity_id" id="identity_id">
+                                                <span class="help-inline">商户系统用户ID(字母或数字)</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">用户标识类型</label>
+                                            <div class="controls">
+                                                <input type="text" name="identity_type" id="identity_type">
+                                                <span class="help-inline">ID的类型，目前只包括UID</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">真实姓名</label>
+                                            <div class="controls">
+                                                <input type="text" name="real_name" id="real_name">
+                                                <span class="help-inline">密文，使用新浪支付RSA公钥加密。明文长度：50</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">证件类型</label>
+                                            <div class="controls">
+                                                <select name="cert_type" id="cert_type">
+                                                    <option>IC</option>
+                                                </select>
+                                                <span class="help-inline">见附录，目前只支持身份证</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">证件号码</label>
+                                            <div class="controls">
+                                                <input type="text" name="cert_no" id="cert_no">
+                                                <span class="help-inline">密文，使用新浪支付RSA公钥加密。明文长度：30</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">请求者IP</label>
+                                            <div class="controls">
+                                                <input type="text" name="client_ip" id="client_ip">
+                                                <span class="help-inline">用户在商户平台操作时候的IP地址，公网IP，不是内网IP用于风控校验，请填写用户真实IP，否则容易风控拦截</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">提交</button>
+                                    <input id="reset" type="reset" class="btn btn-primary" value="刷新">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--close-内容页-->
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.ui.custom.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="Scripts/sina_tools.js"></script>
+    <script src="Scripts/sina_api.js"></script>
+    <script>
+        //载入导航栏与头部
+        $("#sina_side_Header_part").load("sina_side_Header_part.html");
+        //载入基本参数页面
+        $("#basicparameter").load("basicparameter.html");
+    </script>
+    <script src="js/jquery.validate.js"></script>
+    <script>
+        //业务参数赋值
+        $("#identity_type").val("UID");
+        $("#identity_id").val($.cookie("identity_id"));
+        $("#client_ip").val("101.231.34.38");
+        //表单验证
+        $("#request_form").validate({
+            rules: {
+                //基本参数验证部分
+                service: {
+                    required: true
+                },
+                version: {
+                    required: true
+                },
+                request_time: {
+                    required: true
+                },
+                partner_id: {
+                    required: true
+                },
+                _input_charset: {
+                    required: true
+                },
+                sign_type: {
+                    required: true
+                },
+                //业务参数验证部分
+                identity_id: {
+                    required: true
+                },
+                identity_type: {
+                    required: true
+                },
+                real_name: {
+                    required: true
+                },
+                cert_no: {
+                    required: true
+                },
+                client_ip: {
+                    required: true
+                },
+            },
+            errorClass: "help-inline",
+            errorElement: "span",
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents('.control-group').addClass('error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents('.control-group').removeClass('error');
+                $(element).parents('.control-group').addClass('success');
+            },
+            submitHandler: function (form) {
+                //需要加密的参数数组
+                var Encryptionstr = ["cert_no", "real_name"];
+                send(Encryptionstr);
+            }
+        })
+    </script>
+</body>
+</html>
