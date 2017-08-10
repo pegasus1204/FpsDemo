@@ -38,13 +38,13 @@ function getNowFormatDate() {
 *返回异步地址字符串
 */
 function get_notify_url() {
-    return "http://" + window.location.host + "JavaDemo/Notify";
+    return "http://" + window.location.host + "/JavaDemo/Notify";
 }
 /*
 *返回同步地址字符串
 */
 function get_return_url() {
-    return "http://" + window.location.host + "JavaDemo/index.html";
+    return "http://" + window.location.host + "/JavaDemo/index.html";
 }
 /*
 *按钮的禁止函数
